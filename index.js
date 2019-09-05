@@ -36,10 +36,15 @@ async function app() {
         const result = await classifier.predictClass(activation);
   
         const classes = ['A', 'B', 'C','D'];
+
         document.getElementById('console').innerText = `
           prediction: ${classes[result.classIndex]}\n
           probability: ${result.confidences[result.classIndex]}
         `;
+
+        if(result.confidences[0]<0.5 && result.confidences[1]<0.5 && result.confidences[2]<0.5){
+            document.getElementById('console').innerText = `prediction: None\n`;
+        }
       }
   
       await tf.nextFrame();
